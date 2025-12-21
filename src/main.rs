@@ -1,27 +1,10 @@
 #![deny(warnings)]
+mod handlers;
 mod verbs;
 
 use log::{error, info};
-use serde::Serialize;
 use std::sync::Arc;
-use warp::{Filter, Rejection, Reply};
-
-async fn get_verb_handler(
-    verb_name: String,
-    verbs: Arc<Vec<verbs::Verb>>,
-) -> Result<warp::reply::Response, Rejection> {
-    match verbs.binary_search_by(|v| v.verb.cmp(&verb_name)) {
-        Ok(index) => Ok(warp::reply::json(&verbs[index]).into_response()),
-        Err(_) => {
-            Ok(warp::reply::with_status("", warp::http::StatusCode::NOT_FOUND).into_response())
-        }
-    }
-}
-
-#[derive(Serialize)]
-struct HelloWorld {
-    message: String,
-}
+use warp::Filter;
 
 #[tokio::main]
 async fn main() {
@@ -49,25 +32,29 @@ async fn main() {
     // Clone Arc for use in closures
     let verbs_for_verb_handler = verbs.clone();
 
-    // Handler for /verb/:verb endpoint
-    let verb_route = warp::path("verb")
+    // API routes with /api prefix
+    let api_verb_route = warp::path("api")
+        .and(warp::path("verb"))
         .and(warp::path::param::<String>())
         .and(warp::get())
         .and_then(move |verb_name: String| {
             let verbs = verbs_for_verb_handler.clone();
-            async move { get_verb_handler(verb_name, verbs).await }
+            async move { handlers::get_verb_handler(verb_name, verbs).await }
         });
 
-    // Match any request and return hello world as JSON!
-    let hello_route = warp::any().map(|| {
-        let hello = HelloWorld {
-            message: "Hello, World!".to_string(),
-        };
-        warp::reply::json(&hello)
-    });
+    let api_hello_route = warp::path("api")
+        .and(warp::path("hello"))
+        .and(warp::get())
+        .and_then(|| async { handlers::hello_handler().await });
 
-    // Combine routes
-    let routes = verb_route.or(hello_route).with(cors);
+    // Combine API routes
+    let api_routes = api_verb_route.or(api_hello_route);
+
+    // 404 handler for unmatched routes
+    let not_found = warp::any().and_then(|| async { handlers::not_found_handler().await });
+
+    // Combine all routes with 404 fallback
+    let routes = api_routes.or(not_found).with(cors);
 
     info!("start server");
 
