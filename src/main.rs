@@ -3,8 +3,10 @@ mod handlers;
 mod template;
 mod verbs;
 
+use clap::Parser;
 use log::{error, info};
 use rust_embed::RustEmbed;
+use std::net::IpAddr;
 use std::sync::Arc;
 use warp::Filter;
 
@@ -17,9 +19,23 @@ const CONJUGATION_XML: &str = include_str!("../data/conjugation-fr.xml");
 #[folder = "public"]
 struct Asset;
 
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    /// Host address to bind to
+    #[arg(long, default_value = "0.0.0.0")]
+    host: String,
+
+    /// Port to bind to
+    #[arg(long, default_value_t = 3030)]
+    port: u16,
+}
+
 #[tokio::main]
 async fn main() {
     pretty_env_logger::init();
+
+    let args = Args::parse();
 
     // Load all verbs from embedded data
     info!("Loading verbs from embedded data...");
@@ -136,7 +152,14 @@ async fn main() {
     // The order matters: API routes have highest priority, then static files, then index.html
     let routes = api_routes.or(static_files).or(index).with(cors);
 
-    info!("start server");
+    // Parse host address
+    let host: IpAddr = args.host.parse().unwrap_or_else(|_| {
+        error!("Invalid host address: {}", args.host);
+        std::process::exit(1);
+    });
 
-    warp::serve(routes).run(([0, 0, 0, 0], 3030)).await;
+    let addr = (host, args.port);
+    info!("Starting server on {}:{}", host, args.port);
+
+    warp::serve(routes).run(addr).await;
 }
