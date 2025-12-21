@@ -45,6 +45,7 @@ async fn main() {
 
     // Clone Arc for use in closures
     let verbs_for_verb_handler = verbs.clone();
+    let verbs_for_search_handler = verbs.clone();
     let templates_for_template_handler = templates.clone();
 
     // API routes with /api prefix
@@ -66,13 +67,28 @@ async fn main() {
             async move { handlers::get_template_handler(template_name, templates).await }
         });
 
+    let api_search_route = warp::path("api")
+        .and(warp::path("search"))
+        .and(warp::query::<std::collections::HashMap<String, String>>())
+        .and(warp::get())
+        .and_then(move |params: std::collections::HashMap<String, String>| {
+            let verbs = verbs_for_search_handler.clone();
+            async move {
+                let query = params.get("q").cloned().unwrap_or_default();
+                handlers::search_verbs_handler(query, verbs).await
+            }
+        });
+
     let api_hello_route = warp::path("api")
         .and(warp::path("hello"))
         .and(warp::get())
         .and_then(|| async { handlers::hello_handler().await });
 
     // Combine API routes
-    let api_routes = api_verb_route.or(api_template_route).or(api_hello_route);
+    let api_routes = api_verb_route
+        .or(api_template_route)
+        .or(api_search_route)
+        .or(api_hello_route);
 
     // 404 handler for unmatched routes
     let not_found = warp::any().and_then(|| async { handlers::not_found_handler().await });
