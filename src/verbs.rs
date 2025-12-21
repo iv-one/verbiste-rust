@@ -1,8 +1,6 @@
 use quick_xml::Reader;
 use quick_xml::events::Event;
 use serde::Serialize;
-use std::fs::File;
-use std::io::BufReader;
 
 #[derive(Debug, Clone, Serialize)]
 #[allow(dead_code)]
@@ -12,10 +10,8 @@ pub struct Verb {
     pub aspirate_h: bool,
 }
 
-pub fn load_all_verbs() -> Result<Vec<Verb>, Box<dyn std::error::Error>> {
-    let file = File::open("data/verbs-fr.xml")?;
-    let reader = BufReader::new(file);
-    let mut xml_reader = Reader::from_reader(reader);
+pub fn load_all_verbs(xml_data: &str) -> Result<Vec<Verb>, Box<dyn std::error::Error>> {
+    let mut xml_reader = Reader::from_str(xml_data);
     xml_reader.trim_text(true);
 
     let mut verbs = Vec::new();

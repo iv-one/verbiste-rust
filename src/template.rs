@@ -2,8 +2,6 @@ use quick_xml::Reader;
 use quick_xml::events::Event;
 use serde::Serialize;
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::BufReader;
 
 #[derive(Debug, Clone, Serialize)]
 #[allow(dead_code)]
@@ -58,10 +56,10 @@ pub struct Participle {
     pub past_participle: Vec<Vec<String>>,
 }
 
-pub fn load_all_templates() -> Result<HashMap<String, Template>, Box<dyn std::error::Error>> {
-    let file = File::open("data/conjugation-fr.xml")?;
-    let reader = BufReader::new(file);
-    let mut xml_reader = Reader::from_reader(reader);
+pub fn load_all_templates(
+    xml_data: &str,
+) -> Result<HashMap<String, Template>, Box<dyn std::error::Error>> {
+    let mut xml_reader = Reader::from_str(xml_data);
     xml_reader.trim_text(true);
 
     let mut templates = HashMap::new();
@@ -94,82 +92,78 @@ pub fn load_all_templates() -> Result<HashMap<String, Template>, Box<dyn std::er
 
     loop {
         match xml_reader.read_event_into(&mut buf) {
-            Ok(Event::Start(e)) => {
-                match e.name().as_ref() {
-                    b"template" => {
-                        for attr in e.attributes() {
-                            let attr = attr?;
-                            if attr.key.as_ref() == b"name" {
-                                current_template_name = Some(
-                                    String::from_utf8(attr.value.to_vec())?
-                                );
-                            }
+            Ok(Event::Start(e)) => match e.name().as_ref() {
+                b"template" => {
+                    for attr in e.attributes() {
+                        let attr = attr?;
+                        if attr.key.as_ref() == b"name" {
+                            current_template_name = Some(String::from_utf8(attr.value.to_vec())?);
                         }
                     }
-                    b"indicative" => {
-                        in_indicative = true;
-                    }
-                    b"conditional" => {
-                        in_conditional = true;
-                    }
-                    b"subjunctive" => {
-                        in_subjunctive = true;
-                    }
-                    b"infinitive-present" => {
-                        current_section = Some("infinitive-present");
-                        current_infinitive_present.clear();
-                    }
-                    b"present" => {
-                        if in_indicative {
-                            current_section = Some("indicative-present");
-                            current_present.clear();
-                        } else if in_conditional {
-                            current_section = Some("conditional-present");
-                            current_conditional_present.clear();
-                        } else if in_subjunctive {
-                            current_section = Some("subjunctive-present");
-                            current_subjunctive_present.clear();
-                        }
-                    }
-                    b"imperfect" => {
-                        if in_indicative {
-                            current_section = Some("indicative-imperfect");
-                            current_imperfect.clear();
-                        } else if in_subjunctive {
-                            current_section = Some("subjunctive-imperfect");
-                            current_subjunctive_imperfect.clear();
-                        }
-                    }
-                    b"future" => {
-                        current_section = Some("indicative-future");
-                        current_future.clear();
-                    }
-                    b"simple-past" => {
-                        current_section = Some("indicative-simple-past");
-                        current_simple_past.clear();
-                    }
-                    b"imperative-present" => {
-                        current_section = Some("imperative-present");
-                        current_imperative_present.clear();
-                    }
-                    b"present-participle" => {
-                        current_section = Some("present-participle");
-                        current_present_participle.clear();
-                    }
-                    b"past-participle" => {
-                        current_section = Some("past-participle");
-                        current_past_participle.clear();
-                    }
-                    b"p" => {
-                        in_p = true;
-                        current_p_elements.clear();
-                    }
-                    b"i" => {
-                        in_i = true;
-                    }
-                    _ => {}
                 }
-            }
+                b"indicative" => {
+                    in_indicative = true;
+                }
+                b"conditional" => {
+                    in_conditional = true;
+                }
+                b"subjunctive" => {
+                    in_subjunctive = true;
+                }
+                b"infinitive-present" => {
+                    current_section = Some("infinitive-present");
+                    current_infinitive_present.clear();
+                }
+                b"present" => {
+                    if in_indicative {
+                        current_section = Some("indicative-present");
+                        current_present.clear();
+                    } else if in_conditional {
+                        current_section = Some("conditional-present");
+                        current_conditional_present.clear();
+                    } else if in_subjunctive {
+                        current_section = Some("subjunctive-present");
+                        current_subjunctive_present.clear();
+                    }
+                }
+                b"imperfect" => {
+                    if in_indicative {
+                        current_section = Some("indicative-imperfect");
+                        current_imperfect.clear();
+                    } else if in_subjunctive {
+                        current_section = Some("subjunctive-imperfect");
+                        current_subjunctive_imperfect.clear();
+                    }
+                }
+                b"future" => {
+                    current_section = Some("indicative-future");
+                    current_future.clear();
+                }
+                b"simple-past" => {
+                    current_section = Some("indicative-simple-past");
+                    current_simple_past.clear();
+                }
+                b"imperative-present" => {
+                    current_section = Some("imperative-present");
+                    current_imperative_present.clear();
+                }
+                b"present-participle" => {
+                    current_section = Some("present-participle");
+                    current_present_participle.clear();
+                }
+                b"past-participle" => {
+                    current_section = Some("past-participle");
+                    current_past_participle.clear();
+                }
+                b"p" => {
+                    in_p = true;
+                    current_p_elements.clear();
+                }
+                b"i" => {
+                    in_i = true;
+                }
+                _ => {}
+            },
             Ok(Event::Text(e)) => {
                 if in_i && in_p {
                     let text = e.unescape()?.to_string();
@@ -293,4 +287,3 @@ pub fn load_all_templates() -> Result<HashMap<String, Template>, Box<dyn std::er
 
     Ok(templates)
 }
-

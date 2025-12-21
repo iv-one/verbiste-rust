@@ -7,13 +7,17 @@ use log::{error, info};
 use std::sync::Arc;
 use warp::Filter;
 
+// Embed XML data files into the binary at compile time
+const VERBS_XML: &str = include_str!("../data/verbs-fr.xml");
+const CONJUGATION_XML: &str = include_str!("../data/conjugation-fr.xml");
+
 #[tokio::main]
 async fn main() {
     pretty_env_logger::init();
 
-    // Load all verbs on startup
-    info!("Loading verbs from data/verbs-fr.xml...");
-    let verbs = match verbs::load_all_verbs() {
+    // Load all verbs from embedded data
+    info!("Loading verbs from embedded data...");
+    let verbs = match verbs::load_all_verbs(VERBS_XML) {
         Ok(v) => {
             info!("Loaded {} verbs", v.len());
             Arc::new(v)
@@ -24,9 +28,9 @@ async fn main() {
         }
     };
 
-    // Load all templates on startup
-    info!("Loading templates from data/conjugation-fr.xml...");
-    let templates = match template::load_all_templates() {
+    // Load all templates from embedded data
+    info!("Loading templates from embedded data...");
+    let templates = match template::load_all_templates(CONJUGATION_XML) {
         Ok(t) => {
             info!("Loaded {} templates", t.len());
             Arc::new(t)
