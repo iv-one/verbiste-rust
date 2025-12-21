@@ -4,12 +4,18 @@ mod template;
 mod verbs;
 
 use log::{error, info};
+use rust_embed::RustEmbed;
 use std::sync::Arc;
 use warp::Filter;
 
 // Embed XML data files into the binary at compile time
 const VERBS_XML: &str = include_str!("../data/verbs-fr.xml");
 const CONJUGATION_XML: &str = include_str!("../data/conjugation-fr.xml");
+
+// Embed public directory into binary at compile time
+#[derive(RustEmbed)]
+#[folder = "public"]
+struct Asset;
 
 #[tokio::main]
 async fn main() {
@@ -94,11 +100,37 @@ async fn main() {
         .or(api_search_route)
         .or(api_hello_route);
 
-    // Serve static files from public directory
-    let static_files = warp::fs::dir("public");
+    // Serve static files from embedded public directory
+    let static_files = warp::path::tail().and_then(|path: warp::path::Tail| {
+        let path_str = path.as_str().to_string();
+        async move {
+            if let Some(file) = Asset::get(&path_str) {
+                let mime = mime_guess::from_path(&path_str).first_or_octet_stream();
+                let mut response = warp::reply::Response::new(file.data.to_vec().into());
+                response.headers_mut().insert(
+                    "content-type",
+                    warp::http::HeaderValue::from_str(mime.as_ref()).unwrap(),
+                );
+                Ok::<_, warp::Rejection>(response)
+            } else {
+                Err(warp::reject::not_found())
+            }
+        }
+    });
 
     // Serve index.html for SPA routing (fallback for any non-API route)
-    let index = warp::get().and(warp::fs::file("public/index.html"));
+    let index = warp::get().and_then(|| async move {
+        if let Some(file) = Asset::get("index.html") {
+            let mut response = warp::reply::Response::new(file.data.to_vec().into());
+            response.headers_mut().insert(
+                "content-type",
+                warp::http::HeaderValue::from_str("text/html").unwrap(),
+            );
+            Ok::<_, warp::Rejection>(response)
+        } else {
+            Err(warp::reject::not_found())
+        }
+    });
 
     // Combine all routes: API first, then static files, then index.html for SPA
     // The order matters: API routes have highest priority, then static files, then index.html
