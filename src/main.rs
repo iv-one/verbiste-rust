@@ -1,5 +1,6 @@
 #![deny(warnings)]
 mod handlers;
+mod template;
 mod verbs;
 
 use log::{error, info};
@@ -23,6 +24,19 @@ async fn main() {
         }
     };
 
+    // Load all templates on startup
+    info!("Loading templates from data/conjugation-fr.xml...");
+    let templates = match template::load_all_templates() {
+        Ok(t) => {
+            info!("Loaded {} templates", t.len());
+            Arc::new(t)
+        }
+        Err(e) => {
+            error!("Failed to load templates: {}", e);
+            std::process::exit(1);
+        }
+    };
+
     // Configure CORS to allow all origins and GET method
     let cors = warp::cors()
         .allow_any_origin()
@@ -31,6 +45,7 @@ async fn main() {
 
     // Clone Arc for use in closures
     let verbs_for_verb_handler = verbs.clone();
+    let templates_for_template_handler = templates.clone();
 
     // API routes with /api prefix
     let api_verb_route = warp::path("api")
@@ -42,13 +57,22 @@ async fn main() {
             async move { handlers::get_verb_handler(verb_name, verbs).await }
         });
 
+    let api_template_route = warp::path("api")
+        .and(warp::path("t"))
+        .and(warp::path::param::<String>())
+        .and(warp::get())
+        .and_then(move |template_name: String| {
+            let templates = templates_for_template_handler.clone();
+            async move { handlers::get_template_handler(template_name, templates).await }
+        });
+
     let api_hello_route = warp::path("api")
         .and(warp::path("hello"))
         .and(warp::get())
         .and_then(|| async { handlers::hello_handler().await });
 
     // Combine API routes
-    let api_routes = api_verb_route.or(api_hello_route);
+    let api_routes = api_verb_route.or(api_template_route).or(api_hello_route);
 
     // 404 handler for unmatched routes
     let not_found = warp::any().and_then(|| async { handlers::not_found_handler().await });

@@ -1,5 +1,7 @@
+use crate::template;
 use crate::verbs;
 use serde::Serialize;
+use std::collections::HashMap;
 use std::sync::Arc;
 use warp::{Rejection, Reply};
 
@@ -25,6 +27,16 @@ pub async fn hello_handler() -> Result<impl Reply, Rejection> {
         message: "Hello, World!".to_string(),
     };
     Ok(warp::reply::json(&hello))
+}
+
+pub async fn get_template_handler(
+    template_name: String,
+    templates: Arc<HashMap<String, template::Template>>,
+) -> Result<warp::reply::Response, Rejection> {
+    match templates.get(&template_name) {
+        Some(template) => Ok(warp::reply::json(template).into_response()),
+        None => Ok(warp::reply::with_status("", warp::http::StatusCode::NOT_FOUND).into_response()),
+    }
 }
 
 pub async fn not_found_handler() -> Result<impl Reply, Rejection> {
