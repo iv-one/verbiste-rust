@@ -12,6 +12,8 @@ As stated in the Verbiste documentation: "if the XML knowledge base is converted
 
 A Rust implementation of French verb conjugation.
 
+**Note:** This project is vibe coded and is used for personal needs (i.e., learning French). It may not follow all best practices and is primarily intended for personal use.
+
 ## Building
 
 ```bash
