@@ -94,11 +94,15 @@ async fn main() {
         .or(api_search_route)
         .or(api_hello_route);
 
-    // 404 handler for unmatched routes
-    let not_found = warp::any().and_then(|| async { handlers::not_found_handler().await });
+    // Serve static files from public directory
+    let static_files = warp::fs::dir("public");
 
-    // Combine all routes with 404 fallback
-    let routes = api_routes.or(not_found).with(cors);
+    // Serve index.html for SPA routing (fallback for any non-API route)
+    let index = warp::get().and(warp::fs::file("public/index.html"));
+
+    // Combine all routes: API first, then static files, then index.html for SPA
+    // The order matters: API routes have highest priority, then static files, then index.html
+    let routes = api_routes.or(static_files).or(index).with(cors);
 
     info!("start server");
 

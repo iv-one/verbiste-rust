@@ -79,7 +79,3 @@ pub async fn search_verbs_handler(
 
     Ok(warp::reply::json(&results).into_response())
 }
-
-pub async fn not_found_handler() -> Result<impl Reply, Rejection> {
-    Ok(warp::reply::with_status("", warp::http::StatusCode::NOT_FOUND).into_response())
-}
