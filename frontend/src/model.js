@@ -107,9 +107,9 @@ export const getMaxWidth = (template = {}) => {
 export const deriveVerbs = (base, suffixes) => {
   const res = suffixes.map(suffix => {
     if (Array.isArray(suffix)) {
-      return suffix.map(s => `${base}${s}`)
+      return suffix.map(s => s ? `${base}${s}` : '')
     } else {
-      return `${base}${suffix}`
+      return suffix ? `${base}${suffix}` : ''
     }
   })
   return reorderVerbs(res)

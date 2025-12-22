@@ -232,43 +232,86 @@ pub fn load_all_templates(
                     }
                     b"p" => {
                         in_p = false;
-                        if !current_p_elements.is_empty() {
-                            match current_section {
-                                Some("infinitive-present") => {
+                        // Always process, even if empty - empty <p></p> should add empty string/vector
+                        match current_section {
+                            Some("infinitive-present") => {
+                                if current_p_elements.is_empty() {
+                                    current_infinitive_present.push(String::new());
+                                } else {
                                     current_infinitive_present.extend(current_p_elements.clone());
                                 }
-                                Some("indicative-present") => {
+                            }
+                            Some("indicative-present") => {
+                                if current_p_elements.is_empty() {
+                                    current_present.push(vec![String::new()]);
+                                } else {
                                     current_present.push(current_p_elements.clone());
                                 }
-                                Some("indicative-imperfect") => {
+                            }
+                            Some("indicative-imperfect") => {
+                                if current_p_elements.is_empty() {
+                                    current_imperfect.push(vec![String::new()]);
+                                } else {
                                     current_imperfect.push(current_p_elements.clone());
                                 }
-                                Some("indicative-future") => {
+                            }
+                            Some("indicative-future") => {
+                                if current_p_elements.is_empty() {
+                                    current_future.push(vec![String::new()]);
+                                } else {
                                     current_future.push(current_p_elements.clone());
                                 }
-                                Some("indicative-simple-past") => {
+                            }
+                            Some("indicative-simple-past") => {
+                                if current_p_elements.is_empty() {
+                                    current_simple_past.push(vec![String::new()]);
+                                } else {
                                     current_simple_past.push(current_p_elements.clone());
                                 }
-                                Some("conditional-present") => {
+                            }
+                            Some("conditional-present") => {
+                                if current_p_elements.is_empty() {
+                                    current_conditional_present.push(vec![String::new()]);
+                                } else {
                                     current_conditional_present.push(current_p_elements.clone());
                                 }
-                                Some("subjunctive-present") => {
+                            }
+                            Some("subjunctive-present") => {
+                                if current_p_elements.is_empty() {
+                                    current_subjunctive_present.push(vec![String::new()]);
+                                } else {
                                     current_subjunctive_present.push(current_p_elements.clone());
                                 }
-                                Some("subjunctive-imperfect") => {
+                            }
+                            Some("subjunctive-imperfect") => {
+                                if current_p_elements.is_empty() {
+                                    current_subjunctive_imperfect.push(vec![String::new()]);
+                                } else {
                                     current_subjunctive_imperfect.push(current_p_elements.clone());
                                 }
-                                Some("imperative-present") => {
+                            }
+                            Some("imperative-present") => {
+                                if current_p_elements.is_empty() {
+                                    current_imperative_present.push(vec![String::new()]);
+                                } else {
                                     current_imperative_present.push(current_p_elements.clone());
                                 }
-                                Some("present-participle") => {
+                            }
+                            Some("present-participle") => {
+                                if current_p_elements.is_empty() {
+                                    current_present_participle.push(String::new());
+                                } else {
                                     current_present_participle.extend(current_p_elements.clone());
                                 }
-                                Some("past-participle") => {
+                            }
+                            Some("past-participle") => {
+                                if current_p_elements.is_empty() {
+                                    current_past_participle.push(vec![String::new()]);
+                                } else {
                                     current_past_participle.push(current_p_elements.clone());
                                 }
-                                _ => {}
                             }
+                            _ => {}
                         }
                         current_p_elements.clear();
                     }
