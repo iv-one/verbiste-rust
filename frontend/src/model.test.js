@@ -95,4 +95,18 @@ describe('Verb aimer', function () {
   it('subjunctive', function () {
     expect(verb.subjunctive).to.deep.equal([['aime'], ['aimes'], ['aime'], ['aiment'], ['aimions'], ['aimiez']])
   })
+
+  // participe présent
+  it('present participle', function () {
+    expect(verb.presentParticiple).to.deep.equal(['aimant'])
+  })
+
+  // participe passé
+  it('past participle', function () {
+    expect(verb.pastParticiple).to.deep.equal([['aimé'], ['aimés'], ['aimée'], ['aimées']])
+  })
+
+  it('participle', function () {
+    expect(verb.participle).to.deep.equal('aimé')
+  })
 })

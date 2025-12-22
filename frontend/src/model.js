@@ -32,6 +32,21 @@ export class Verb {
     return this.derive('infinitive.infinitive_present')
   }
 
+  // participe présent
+  get presentParticiple () {
+    return this.derive('participle.present_participle')
+  }
+
+  // participe passé
+  get pastParticiple () {
+    return this.derive('participle.past_participle')
+  }
+
+  // participe passé main form
+  get participle () {
+    return this.pastParticiple[0][0]
+  }
+
   get simplePast () {
     return this.derive('indicative.simple_past')
   }
@@ -85,6 +100,9 @@ export const deriveVerbs = (base, suffixes) => {
 }
 
 export const reorderVerbs = (verbs) => {
+  if (verbs.length < 6) {
+    return verbs
+  }
   // take the latest element and insert in position 4
   const latest = verbs.pop()
   verbs.splice(3, 0, latest)
