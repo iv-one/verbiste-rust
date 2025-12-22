@@ -30,6 +30,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.2(rolldown-vite@7.3.0(jiti@2.6.1))
+      chai:
+        specifier: ^6.2.1
+        version: 6.2.1
       mocha:
         specifier: ^11.7.5
         version: 11.7.5
@@ -540,6 +543,10 @@ packages:
 
   caniuse-lite@1.0.30001761:
     resolution: {integrity: sha512-JF9ptu1vP2coz98+5051jZ4PwQgd2ni8A+gYSN7EA7dPKIMf0pDlSUxhdmVOaV3/fYK5uWBkgSXJaRLr4+3A6g==}
+
+  chai@6.2.1:
+    resolution: {integrity: sha512-p4Z49OGG5W/WBCPSS/dH3jQ73kD6tiMmUM+bckNK6Jr5JHMG3k9bg/BvKR8lKmtVBKmOiuVaV2ws8s9oSbwysg==}
+    engines: {node: '>=18'}
 
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -2377,6 +2384,8 @@ snapshots:
   camelcase@6.3.0: {}
 
   caniuse-lite@1.0.30001761: {}
+
+  chai@6.2.1: {}
 
   chalk@4.1.2:
     dependencies:
