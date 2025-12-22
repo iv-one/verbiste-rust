@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test'
 import { expect } from 'chai'
-import { Verb } from './model.js'
+import { Verb, getMaxWidth } from './model.js'
 
 describe('Verb', function () {
   describe('#constructor', function () {
@@ -24,5 +24,28 @@ describe('Verb', function () {
       expect(verb.suffix).to.equal('être')
       expect(verb.base).to.equal('')
     })
+  })
+})
+
+describe('getMaxWidth', function () {
+  it('should return the max width of a template', function () {
+    const template = {
+      name: 'aim:er',
+      infinitive: {
+        infinitive_present: ['er']
+      }
+    }
+    expect(getMaxWidth(template)).to.equal(1)
+  })
+
+  it('should return the max width of a template with nested array', function () {
+    const template = {
+      name: 'aim:er',
+      cond: ['urre'],
+      infinitive: {
+        infinitive_present: ['er', 'mer']
+      }
+    }
+    expect(getMaxWidth(template)).to.equal(2)
   })
 })
