@@ -70,6 +70,14 @@ export class Verb {
   get subjunctive () {
     return this.derive('subjunctive.present')
   }
+
+  get subjunctiveImperfect () {
+    return this.derive('subjunctive.imperfect')
+  }
+
+  get imperativePresent () {
+    return this.derive('imperative.imperative_present')
+  }
 }
 
 // iterate over template fields, if field is an array, get the max length

@@ -109,4 +109,14 @@ describe('Verb aimer', function () {
   it('participle', function () {
     expect(verb.participle).to.deep.equal('aimé')
   })
+
+  // subjonctif imparfait
+  it('subjunctive imperfect', function () {
+    expect(verb.subjunctiveImperfect).to.deep.equal([['aimasse'], ['aimasses'], ['aimât'], ['aimassent'], ['aimassions'], ['aimassiez']])
+  })
+
+  // imperatif présent
+  it('imperative present', function () {
+    expect(verb.imperativePresent).to.deep.equal([['aime'], ['aimons'], ['aimez']])
+  })
 })
