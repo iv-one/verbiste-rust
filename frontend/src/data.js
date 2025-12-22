@@ -64,3 +64,11 @@ export const vander = [
   'revenir',
   'rentrer'
 ]
+
+export const etreVerbs = (verb) => {
+  return etre.includes(verb)
+}
+
+export const etreAndAvoirVerbs = (verb) => {
+  return etre.includes(verb) && avoir.includes(verb)
+}

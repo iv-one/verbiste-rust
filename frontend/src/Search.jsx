@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import useSWR from 'swr'
+import Conjugation from './Conjugation'
 
 export default function Search () {
   const [search, setSearch] = useState('')
@@ -11,7 +12,7 @@ export default function Search () {
 
       <div className='mt-2 max-w-md'>
         {
-        data && (
+        data && data.length > 1 && (
           <ul className='divide-y divide-gray-200'>
             {data.map(item => (
               <li className='p-2 flex items-center justify-between cursor-pointer hover:bg-gray-100' key={item.id} onClick={() => setSearch(item.verb)}>
@@ -23,6 +24,10 @@ export default function Search () {
         )
       }
       </div>
+
+      {
+        data && data.length === 1 && <Conjugation verb={data[0]} />
+      }
     </div>
   )
 }

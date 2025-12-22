@@ -8,24 +8,32 @@ export const Faces = [
 ]
 
 export class Verb {
-  constructor (verb, template) {
+  constructor (verb, template = {}) {
     this.verb = verb
     this.template = template
+    this.cache = new Map()
 
-    const name = template.name
+    const name = template.name || ''
     const [, suffix] = name.split(':')
+
     this.base = verb.replace(suffix, '')
     this.suffix = suffix
-    this.maxWidth = getMaxWidth(template)
+    this.maxWidth = Math.max(this.infinitive.length, this.future[0].length)
   }
 
   derive (field) {
+    if (this.cache.has(field)) {
+      return this.cache.get(field)
+    }
+
     const path = field.split('.')
     let value = this.template
     for (const p of path) {
       value = value[p]
     }
-    return deriveVerbs(this.base, value)
+    const result = deriveVerbs(this.base, value)
+    this.cache.set(field, result)
+    return result
   }
 
   get infinitive () {
@@ -82,7 +90,7 @@ export class Verb {
 
 // iterate over template fields, if field is an array, get the max length
 // if it's an object, call getMaxWidth on the object
-export const getMaxWidth = (template) => {
+export const getMaxWidth = (template = {}) => {
   let maxWidth = 0
   for (const field of Object.values(template)) {
     if (Array.isArray(field)) {

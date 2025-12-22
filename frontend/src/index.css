@@ -9,3 +9,34 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.conjugation-table {
+  border-collapse: collapse;
+  @apply min-w-xl;
+}
+
+.conjugation-table {
+  tr {
+    td:first-child {
+      @apply text-sm text-gray-500;
+    }
+  }
+
+  th, td {
+    @apply text-left;
+  }
+
+  td {
+    @apply px-4;
+  }
+
+  th {
+    @apply px-4 py-1 text-sm font-normal text-gray-500;
+  }
+
+  .secondary {
+    th {
+      @apply pt-8;
+    }
+  }
+}
