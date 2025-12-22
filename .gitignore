@@ -19,3 +19,4 @@ Thumbs.db
 *.pdb
 
 node_modules
+dist
