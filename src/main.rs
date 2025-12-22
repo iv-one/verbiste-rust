@@ -105,16 +105,8 @@ async fn main() {
             }
         });
 
-    let api_hello_route = warp::path("api")
-        .and(warp::path("hello"))
-        .and(warp::get())
-        .and_then(|| async { handlers::hello_handler().await });
-
     // Combine API routes
-    let api_routes = api_verb_route
-        .or(api_template_route)
-        .or(api_search_route)
-        .or(api_hello_route);
+    let api_routes = api_verb_route.or(api_template_route).or(api_search_route);
 
     // Serve static files from embedded public directory
     let static_files = warp::path::tail().and_then(|path: warp::path::Tail| {

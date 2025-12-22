@@ -938,6 +938,7 @@ dependencies = [
  "clap",
  "log",
  "mime_guess",
+ "percent-encoding",
  "pretty_env_logger",
  "quick-xml",
  "rust-embed",

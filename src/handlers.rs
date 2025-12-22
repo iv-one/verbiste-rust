@@ -1,14 +1,10 @@
 use crate::template;
 use crate::verbs;
-use serde::Serialize;
+use percent_encoding::percent_decode_str;
 use std::collections::HashMap;
 use std::sync::Arc;
-use warp::{Rejection, Reply};
-
-#[derive(Serialize)]
-pub struct HelloWorld {
-    pub message: String,
-}
+use warp::Rejection;
+use warp::Reply;
 
 pub async fn get_verb_handler(
     verb_name: String,
@@ -22,18 +18,17 @@ pub async fn get_verb_handler(
     }
 }
 
-pub async fn hello_handler() -> Result<impl Reply, Rejection> {
-    let hello = HelloWorld {
-        message: "Hello, World!".to_string(),
-    };
-    Ok(warp::reply::json(&hello))
-}
-
 pub async fn get_template_handler(
     template_name: String,
     templates: Arc<HashMap<String, template::Template>>,
 ) -> Result<warp::reply::Response, Rejection> {
-    match templates.get(&template_name) {
+    // Decode URL-encoded template name (e.g., %C3%AAtre -> être)
+    let decoded_name = percent_decode_str(&template_name)
+        .decode_utf8()
+        .map_err(|_| warp::reject::not_found())?
+        .to_string();
+
+    match templates.get(&decoded_name) {
         Some(template) => Ok(warp::reply::json(template).into_response()),
         None => Ok(warp::reply::with_status("", warp::http::StatusCode::NOT_FOUND).into_response()),
     }
