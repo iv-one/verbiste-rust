@@ -1,0 +1,177 @@
+{
+  "name": ":être",
+  "infinitive": {
+    "infinitive_present": [
+      "être"
+    ]
+  },
+  "indicative": {
+    "present": [
+      [
+        "suis"
+      ],
+      [
+        "es"
+      ],
+      [
+        "est"
+      ],
+      [
+        "sommes"
+      ],
+      [
+        "êtes"
+      ],
+      [
+        "sont"
+      ]
+    ],
+    "imperfect": [
+      [
+        "étais"
+      ],
+      [
+        "étais"
+      ],
+      [
+        "était"
+      ],
+      [
+        "étions"
+      ],
+      [
+        "étiez"
+      ],
+      [
+        "étaient"
+      ]
+    ],
+    "future": [
+      [
+        "serai"
+      ],
+      [
+        "seras"
+      ],
+      [
+        "sera"
+      ],
+      [
+        "serons"
+      ],
+      [
+        "serez"
+      ],
+      [
+        "seront"
+      ]
+    ],
+    "simple_past": [
+      [
+        "fus"
+      ],
+      [
+        "fus"
+      ],
+      [
+        "fut"
+      ],
+      [
+        "fûmes"
+      ],
+      [
+        "fûtes"
+      ],
+      [
+        "furent"
+      ]
+    ]
+  },
+  "conditional": {
+    "present": [
+      [
+        "serais"
+      ],
+      [
+        "serais"
+      ],
+      [
+        "serait"
+      ],
+      [
+        "serions"
+      ],
+      [
+        "seriez"
+      ],
+      [
+        "seraient"
+      ]
+    ]
+  },
+  "subjunctive": {
+    "present": [
+      [
+        "sois"
+      ],
+      [
+        "sois"
+      ],
+      [
+        "soit"
+      ],
+      [
+        "soyons"
+      ],
+      [
+        "soyez"
+      ],
+      [
+        "soient"
+      ]
+    ],
+    "imperfect": [
+      [
+        "fusse"
+      ],
+      [
+        "fusses"
+      ],
+      [
+        "fût"
+      ],
+      [
+        "fussions"
+      ],
+      [
+        "fussiez"
+      ],
+      [
+        "fussent"
+      ]
+    ]
+  },
+  "imperative": {
+    "imperative_present": [
+      [
+        "sois"
+      ],
+      [
+        "soyons"
+      ],
+      [
+        "soyez"
+      ]
+    ]
+  },
+  "participle": {
+    "present_participle": [
+      "étant"
+    ],
+    "past_participle": [
+      [
+        "été"
+      ]
+    ]
+  }
+}

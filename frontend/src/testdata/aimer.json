@@ -1,0 +1,186 @@
+{
+  "name": "aim:er",
+  "infinitive": {
+    "infinitive_present": [
+      "er"
+    ]
+  },
+  "indicative": {
+    "present": [
+      [
+        "e"
+      ],
+      [
+        "es"
+      ],
+      [
+        "e"
+      ],
+      [
+        "ons"
+      ],
+      [
+        "ez"
+      ],
+      [
+        "ent"
+      ]
+    ],
+    "imperfect": [
+      [
+        "ais"
+      ],
+      [
+        "ais"
+      ],
+      [
+        "ait"
+      ],
+      [
+        "ions"
+      ],
+      [
+        "iez"
+      ],
+      [
+        "aient"
+      ]
+    ],
+    "future": [
+      [
+        "erai"
+      ],
+      [
+        "eras"
+      ],
+      [
+        "era"
+      ],
+      [
+        "erons"
+      ],
+      [
+        "erez"
+      ],
+      [
+        "eront"
+      ]
+    ],
+    "simple_past": [
+      [
+        "ai"
+      ],
+      [
+        "as"
+      ],
+      [
+        "a"
+      ],
+      [
+        "âmes"
+      ],
+      [
+        "âtes"
+      ],
+      [
+        "èrent"
+      ]
+    ]
+  },
+  "conditional": {
+    "present": [
+      [
+        "erais"
+      ],
+      [
+        "erais"
+      ],
+      [
+        "erait"
+      ],
+      [
+        "erions"
+      ],
+      [
+        "eriez"
+      ],
+      [
+        "eraient"
+      ]
+    ]
+  },
+  "subjunctive": {
+    "present": [
+      [
+        "e"
+      ],
+      [
+        "es"
+      ],
+      [
+        "e"
+      ],
+      [
+        "ions"
+      ],
+      [
+        "iez"
+      ],
+      [
+        "ent"
+      ]
+    ],
+    "imperfect": [
+      [
+        "asse"
+      ],
+      [
+        "asses"
+      ],
+      [
+        "ât"
+      ],
+      [
+        "assions"
+      ],
+      [
+        "assiez"
+      ],
+      [
+        "assent"
+      ]
+    ]
+  },
+  "imperative": {
+    "imperative_present": [
+      [
+        "e"
+      ],
+      [
+        "ons"
+      ],
+      [
+        "ez"
+      ]
+    ]
+  },
+  "participle": {
+    "present_participle": [
+      "ant"
+    ],
+    "past_participle": [
+      [
+        "é"
+      ],
+      [
+        "és"
+      ],
+      [
+        "ée"
+      ],
+      [
+        "ées"
+      ]
+    ]
+  }
+}
