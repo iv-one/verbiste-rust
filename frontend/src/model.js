@@ -31,6 +31,30 @@ export class Verb {
   get infinitive () {
     return this.derive('infinitive.infinitive_present')
   }
+
+  get simplePast () {
+    return this.derive('indicative.simple_past')
+  }
+
+  get imperfect () {
+    return this.derive('indicative.imperfect')
+  }
+
+  get present () {
+    return this.derive('indicative.present')
+  }
+
+  get future () {
+    return this.derive('indicative.future')
+  }
+
+  get conditional () {
+    return this.derive('conditional.present')
+  }
+
+  get subjunctive () {
+    return this.derive('subjunctive.present')
+  }
 }
 
 // iterate over template fields, if field is an array, get the max length

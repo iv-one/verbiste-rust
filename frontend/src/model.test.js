@@ -67,7 +67,32 @@ describe('deriveVerbs', function () {
 
 describe('Verb aimer', function () {
   const verb = new Verb('aimer', aimer)
-  it('should derive the infinitive present', function () {
+  it('infinitive present', function () {
     expect(verb.infinitive).to.deep.equal(['aimer'])
+  })
+
+  // simplePast
+  it('simple past', function () {
+    expect(verb.simplePast).to.deep.equal([['aimai'], ['aimas'], ['aima'], ['aimèrent'], ['aimâmes'], ['aimâtes']])
+  })
+
+  // imparfait
+  it('imperfect', function () {
+    expect(verb.imperfect).to.deep.equal([['aimais'], ['aimais'], ['aimait'], ['aimaient'], ['aimions'], ['aimiez']])
+  })
+
+  // conditionnel
+  it('conditional', function () {
+    expect(verb.conditional).to.deep.equal([['aimerais'], ['aimerais'], ['aimerait'], ['aimeraient'], ['aimerions'], ['aimeriez']])
+  })
+
+  // future
+  it('future', function () {
+    expect(verb.future).to.deep.equal([['aimerai'], ['aimeras'], ['aimera'], ['aimeront'], ['aimerons'], ['aimerez']])
+  })
+
+  // subjunctive
+  it('subjunctive', function () {
+    expect(verb.subjunctive).to.deep.equal([['aime'], ['aimes'], ['aime'], ['aiment'], ['aimions'], ['aimiez']])
   })
 })
