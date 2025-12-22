@@ -1,6 +1,7 @@
 import { describe, it } from 'node:test'
 import { expect } from 'chai'
-import { Verb, getMaxWidth } from './model.js'
+import { Verb, getMaxWidth, deriveVerbs } from './model.js'
+import { aimer } from './testdata/index.js'
 
 describe('Verb', function () {
   describe('#constructor', function () {
@@ -47,5 +48,26 @@ describe('getMaxWidth', function () {
       }
     }
     expect(getMaxWidth(template)).to.equal(2)
+  })
+})
+
+describe('deriveVerbs', function () {
+  it('should derive verbs from a base and suffixes', function () {
+    const present = [['e'], ['es'], ['e'], ['ons'], ['ez'], ['ent']]
+    const expected = [['aime'], ['aimes'], ['aime'], ['aiment'], ['aimons'], ['aimez']]
+    expect(deriveVerbs('aim', present)).to.deep.equal(expected)
+  })
+
+  it('should derive verbs from a base and suffixes II', function () {
+    const present = ['er']
+    const expected = ['aimer']
+    expect(deriveVerbs('aim', present)).to.deep.equal(expected)
+  })
+})
+
+describe('Verb aimer', function () {
+  const verb = new Verb('aimer', aimer)
+  it('should derive the infinitive present', function () {
+    expect(verb.infinitive).to.deep.equal(['aimer'])
   })
 })

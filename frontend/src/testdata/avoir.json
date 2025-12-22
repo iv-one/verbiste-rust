@@ -1,0 +1,186 @@
+{
+  "name": ":avoir",
+  "infinitive": {
+    "infinitive_present": [
+      "avoir"
+    ]
+  },
+  "indicative": {
+    "present": [
+      [
+        "ai"
+      ],
+      [
+        "as"
+      ],
+      [
+        "a"
+      ],
+      [
+        "avons"
+      ],
+      [
+        "avez"
+      ],
+      [
+        "ont"
+      ]
+    ],
+    "imperfect": [
+      [
+        "avais"
+      ],
+      [
+        "avais"
+      ],
+      [
+        "avait"
+      ],
+      [
+        "avions"
+      ],
+      [
+        "aviez"
+      ],
+      [
+        "avaient"
+      ]
+    ],
+    "future": [
+      [
+        "aurai"
+      ],
+      [
+        "auras"
+      ],
+      [
+        "aura"
+      ],
+      [
+        "aurons"
+      ],
+      [
+        "aurez"
+      ],
+      [
+        "auront"
+      ]
+    ],
+    "simple_past": [
+      [
+        "eus"
+      ],
+      [
+        "eus"
+      ],
+      [
+        "eut"
+      ],
+      [
+        "eûmes"
+      ],
+      [
+        "eûtes"
+      ],
+      [
+        "eurent"
+      ]
+    ]
+  },
+  "conditional": {
+    "present": [
+      [
+        "aurais"
+      ],
+      [
+        "aurais"
+      ],
+      [
+        "aurait"
+      ],
+      [
+        "aurions"
+      ],
+      [
+        "auriez"
+      ],
+      [
+        "auraient"
+      ]
+    ]
+  },
+  "subjunctive": {
+    "present": [
+      [
+        "aie"
+      ],
+      [
+        "aies"
+      ],
+      [
+        "ait"
+      ],
+      [
+        "ayons"
+      ],
+      [
+        "ayez"
+      ],
+      [
+        "aient"
+      ]
+    ],
+    "imperfect": [
+      [
+        "eusse"
+      ],
+      [
+        "eusses"
+      ],
+      [
+        "eût"
+      ],
+      [
+        "eussions"
+      ],
+      [
+        "eussiez"
+      ],
+      [
+        "eussent"
+      ]
+    ]
+  },
+  "imperative": {
+    "imperative_present": [
+      [
+        "aie"
+      ],
+      [
+        "ayons"
+      ],
+      [
+        "ayez"
+      ]
+    ]
+  },
+  "participle": {
+    "present_participle": [
+      "ayant"
+    ],
+    "past_participle": [
+      [
+        "eu"
+      ],
+      [
+        "eus"
+      ],
+      [
+        "eue"
+      ],
+      [
+        "eues"
+      ]
+    ]
+  }
+}
