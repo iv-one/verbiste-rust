@@ -1,8 +1,8 @@
 import useSWR from 'swr'
 import { Verb, Faces } from './model'
 import { etreVerbs, etreAndAvoirVerbs } from './data'
-import { Button } from '@/components/ui/button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { take } from 'lodash'
 
 export default function Conjugation ({ verb }) {
   const { data } = useSWR(`/api/t/${verb.template}`, fetcher)
@@ -72,6 +72,17 @@ export default function Conjugation ({ verb }) {
         <tbody>
           {rows.map(n => renderRowComposite(n, ax, word.participle))}
         </tbody>
+        <thead className='secondary'>
+          <th />
+          <th>Participe passé</th>
+          <th>Imperatif présent</th>
+          <th />
+          <th />
+          <th />
+        </thead>
+        <tbody>
+          {take(rows, 4).map(n => renderLastRow(n, word))}
+        </tbody>
       </table>
     </div>
   )
@@ -116,9 +127,22 @@ function renderRowComposite (n, word, participle) {
   )
 }
 
+function renderLastRow (n, word) {
+  return (
+    <tr key={n}>
+      <td />
+      <td>{renderCell(word.pastParticiple[n])}</td>
+      <td>{renderCell(word.imperativePresent[n])}</td>
+      <td />
+      <td />
+      <td />
+    </tr>
+  )
+}
+
 function renderCell (cell) {
   if (!cell) {
-    return ' - '
+    return ''
   }
   return cell.join(' / ').trim()
 }
