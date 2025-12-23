@@ -14,11 +14,14 @@ export class Verb {
     this.cache = new Map()
 
     const name = template.name || ''
-    const [, suffix] = name.split(':')
+    const [prefix, suffix] = name.split(':')
 
+    this.prefix = prefix
     this.base = verb.replace(suffix, '')
     this.suffix = suffix
     this.maxWidth = Math.max(this.infinitive.length, this.future[0].length)
+
+    this.group = detectGroup(verb, suffix, this.participle)
   }
 
   derive (field) {
@@ -123,4 +126,14 @@ export const reorderVerbs = (verbs) => {
   const latest = verbs.pop()
   verbs.splice(3, 0, latest)
   return verbs
+}
+
+export const detectGroup = (verb, suffix, participle) => {
+  if (suffix === 'er' && verb !== 'aller') {
+    return 1
+  }
+  if (suffix === 'ir' && participle.includes('ssant')) {
+    return 2
+  }
+  return 3
 }

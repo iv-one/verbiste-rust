@@ -24,6 +24,15 @@ export default function Conjugation ({ verb }) {
 
   return (
     <div className='p-2'>
+      <div className='flex items-center divide-x divide-gray-200'>
+        <div className='pr-2 flex items-center'>
+          {renderCell(word.infinitive)}
+          <div className='mx-2 text-xs text-gray-500 bg-gray-100 font-semibold rounded-md p-1 px-1.5'>{word.group}</div>
+        </div>
+        <div className='px-2 text-sm text-gray-500'>{verb.template}</div>
+        <div className='px-2'>{renderCell(word.presentParticiple)}</div>
+        <div className='px-2'>{word.participle}</div>
+      </div>
       <div>{verb.verb}</div>
       <div>{verb.template}</div>
       <div>{word.participle}</div>
