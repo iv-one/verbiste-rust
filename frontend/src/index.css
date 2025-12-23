@@ -57,6 +57,19 @@
   }
 }
 
+@media (max-width: 768px) {
+  .conjugation-table {
+    th:first-child,
+    td:first-child {
+      display: none;
+    }
+    th:nth-child(2),
+    td:nth-child(2) {
+      padding-left: 0;
+    }
+  }
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
