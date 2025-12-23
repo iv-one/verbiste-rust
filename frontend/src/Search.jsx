@@ -9,7 +9,11 @@ export default function Search () {
   const [search, setSearch] = useQueryState('q')
   const [selectedIndex, setSelectedIndex] = useState(-1)
 
-  const { data } = useSWR(`/api/search?q=${search}`, fetcher)
+  const { data } = useSWR(`/api/search?q=${search}`, fetcher,
+    {
+      keepPreviousData: true
+    }
+  )
   const hasData = data && search && data.length > 1
   const hasSearchResults = data && search && data.length > 0
 
