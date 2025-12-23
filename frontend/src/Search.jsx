@@ -52,6 +52,19 @@ export default function Search () {
     setSearch(item.verb)
   }
 
+  const fullMatch = () => {
+    if (!data) return null
+
+    if (data.length === 1) {
+      return data[0]
+    }
+
+    const item = data.find(item => item.verb === search)
+    return item
+  }
+
+  const selectedVerb = fullMatch()
+
   return (
     <div>
       <h1 className='text-xs border-b border-gray-200 pb-1 w-md px-2 text-gray-500'>Verb</h1>
@@ -62,7 +75,7 @@ export default function Search () {
       />
 
       <div className='mt-2 max-w-md'>
-        {hasData && (
+        {hasData && !selectedVerb && (
           <ul className='divide-y divide-gray-200'>
             {data.map((item, index) => (
               <li
@@ -80,7 +93,7 @@ export default function Search () {
       </div>
 
       {
-        data && data.length === 1 && <Conjugation verb={data[0]} />
+        selectedVerb && <Conjugation verb={selectedVerb} />
       }
     </div>
   )
