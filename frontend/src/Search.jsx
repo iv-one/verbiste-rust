@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { EmptySearch } from './Empty'
 import { useQueryState } from 'nuqs'
 import Conjugation from './Conjugation'
@@ -6,9 +7,45 @@ import useSWR from 'swr'
 
 export default function Search () {
   const [search, setSearch] = useQueryState('q')
+  const [selectedIndex, setSelectedIndex] = useState(-1)
+
   const { data } = useSWR(`/api/search?q=${search}`, fetcher)
   const hasData = data && search && data.length > 1
   const hasSearchResults = data && search && data.length > 0
+
+  // Reset selected index when search changes
+  useEffect(() => {
+    setSelectedIndex(-1)
+  }, [search])
+
+  const handleKeyDown = (e) => {
+    if (!hasData) return
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setSelectedIndex(prev => {
+        if (prev < data.length - 1) {
+          return prev + 1
+        }
+        return prev
+      })
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setSelectedIndex(prev => {
+        if (prev > 0) {
+          return prev - 1
+        }
+        return -1
+      })
+    } else if (e.key === 'Enter' && selectedIndex >= 0 && selectedIndex < data.length) {
+      e.preventDefault()
+      setSearch(data[selectedIndex].verb)
+    }
+  }
+
+  const handleItemClick = (item) => {
+    setSearch(item.verb)
+  }
 
   return (
     <div>
@@ -16,13 +53,18 @@ export default function Search () {
       <SearchInput
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        onKeyDown={handleKeyDown}
       />
 
       <div className='mt-2 max-w-md'>
         {hasData && (
           <ul className='divide-y divide-gray-200'>
-            {data.map(item => (
-              <li className='p-2 flex items-center justify-between cursor-pointer hover:bg-gray-100' key={item.id} onClick={() => setSearch(item.verb)}>
+            {data.map((item, index) => (
+              <li
+                key={item.id}
+                className={`p-2 flex items-center justify-between cursor-pointer hover:bg-gray-100 ${selectedIndex === index ? 'bg-gray-100' : ''}`}
+                onClick={() => handleItemClick(item)}
+              >
                 {item.verb}
                 <span className='text-xs text-gray-500'>{item.template} {item.aspirate_h ? 'ℏ' : ''}</span>
               </li>

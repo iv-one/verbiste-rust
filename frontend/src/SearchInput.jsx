@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-export default function SearchInput ({ value, onChange, placeholder = 'Search' }) {
+export default function SearchInput ({ value, onChange, onKeyDown, placeholder = 'Search' }) {
   const inputRef = useRef(null)
 
   useEffect(() => {
@@ -15,6 +15,8 @@ export default function SearchInput ({ value, onChange, placeholder = 'Search' }
         target: { value: '' }
       }
       onChange(syntheticEvent)
+    } else if (onKeyDown && (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter')) {
+      onKeyDown(e)
     }
   }
 
