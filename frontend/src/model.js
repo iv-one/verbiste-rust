@@ -8,20 +8,22 @@ export const Faces = [
 ]
 
 export class Verb {
-  constructor (verb, template = {}) {
+  constructor (verb, template) {
     this.verb = verb
     this.template = template
     this.cache = new Map()
 
-    const name = template.name || ''
-    const [prefix, suffix] = name.split(':')
+    if (template) {
+      const name = template.name || ''
+      const [prefix, suffix] = name.split(':')
 
-    this.prefix = prefix
-    this.base = verb.replace(suffix, '')
-    this.suffix = suffix
-    this.maxWidth = Math.max(this.infinitive.length, this.future[0].length)
+      this.prefix = prefix
+      this.base = verb.replace(suffix, '')
+      this.suffix = suffix
+      this.maxWidth = Math.max(this.infinitive.length, this.future[0].length)
 
-    this.group = detectGroup(verb, suffix, this.participle)
+      this.group = detectGroup(verb, suffix, this.participle)
+    }
   }
 
   derive (field) {

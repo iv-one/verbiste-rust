@@ -1,17 +1,17 @@
 import useSWR from 'swr'
+import { useEffect } from 'react'
 import { Verb, Faces } from './model'
 import { etreVerbs, etreAndAvoirVerbs } from './data'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { take } from 'lodash'
+import { useQueryState } from 'nuqs'
 
 export default function Conjugation ({ verb }) {
+  const [useEtre, setUseEtre] = useQueryState('ax')
+
   const { data } = useSWR(`/api/t/${verb.template}`, fetcher)
   const { data: etreData } = useSWR('/api/t/:être', fetcher)
   const { data: avoirData } = useSWR('/api/t/:avoir', fetcher)
-
-  if (!data || !etreData || !avoirData) {
-    return <div>Loading...</div>
-  }
 
   const word = new Verb(verb.verb, data)
   const etre = new Verb('être', etreData)
@@ -22,23 +22,34 @@ export default function Conjugation ({ verb }) {
   const isEtre = etreVerbs(verb.verb)
   const isEtreAndAvoir = etreAndAvoirVerbs(verb.verb)
 
-  const ax = isEtre ? etre : avoir
+  useEffect(() => {
+    setUseEtre(isEtre ? 'etre' : 'avoir')
+  }, [data])
+
+  const ax = useEtre === 'etre' ? etre : avoir
+
+  if (!data || !etreData || !avoirData) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className='p-2'>
-      <div className='flex items-center divide-x divide-gray-200'>
-        <div className='pr-2 flex items-center'>
-          {renderCell(word.infinitive)}
-          <div className='mx-2 text-xs text-gray-500 bg-gray-100 font-semibold rounded-md p-1 px-1.5'>{word.group}</div>
+      <div className='flex items-center gap-8'>
+        <div className='flex items-center divide-x divide-gray-200'>
+          <div className='pr-2 flex items-center'>
+            {renderCell(word.infinitive)}
+            <div className='mx-2 text-xs text-gray-500 bg-gray-100 font-semibold rounded-md p-1 px-1.5'>{word.group}</div>
+          </div>
+          <div className='px-2 text-sm text-gray-500'>{verb.template}</div>
+          <div className='px-2'>{renderCell(word.presentParticiple)}</div>
+          <div className='px-2'>{word.participle}</div>
         </div>
-        <div className='px-2 text-sm text-gray-500'>{verb.template}</div>
-        <div className='px-2'>{renderCell(word.presentParticiple)}</div>
-        <div className='px-2'>{word.participle}</div>
+        <div>
+          <AxTabs etre={isEtre} avoir={isEtreAndAvoir} />
+        </div>
       </div>
-      <div>
-        <AxTabs etre={isEtre} avoir={isEtreAndAvoir} />
-      </div>
-      <table className='conjugation-table'>
+
+      <table className='conjugation-table mt-8'>
         <thead>
           <th />
           <th>Passé simple</th>
@@ -70,7 +81,7 @@ export default function Conjugation ({ verb }) {
           <th>Futur antérieur</th>
         </thead>
         <tbody>
-          {rows.map(n => renderRowComposite(n, ax, word.participle))}
+          {rows.map(n => renderRowComposite(n, word, ax))}
         </tbody>
         <thead className='secondary'>
           <th />
@@ -114,15 +125,17 @@ function renderRowSub (n, word) {
   )
 }
 
-function renderRowComposite (n, word, participle) {
+function renderRowComposite (n, word, ax) {
+  const participle = word.participle
+  const present = word.present[n]
   return (
     <tr key={n}>
       <td>{Faces[n]}</td>
-      <td>{renderCell(word.simplePast[n])} {participle}</td>
-      <td>{renderCell(word.imperfect[n])} {participle}</td>
-      <td>{renderCell(word.present[n])} {participle}</td>
-      <td>{renderCell(word.conditional[n])} {participle}</td>
-      <td>{renderCell(word.future[n])} {participle}</td>
+      <td>{renderCellComposite(ax.simplePast[n], participle, present)}</td>
+      <td>{renderCellComposite(ax.imperfect[n], participle, present)}</td>
+      <td>{renderCellComposite(ax.present[n], participle, present)}</td>
+      <td>{renderCellComposite(ax.conditional[n], participle, present)}</td>
+      <td>{renderCellComposite(ax.future[n], participle, present)}</td>
     </tr>
   )
 }
@@ -147,15 +160,25 @@ function renderCell (cell) {
   return cell.join(' / ').trim()
 }
 
+function renderCellComposite (cell, participle, present) {
+  const hasPresent = present.filter(Boolean).length > 0
+  if (!cell || !hasPresent) {
+    return ''
+  }
+  return `${cell.join(' / ').trim()} ${participle}`
+}
+
 function fetcher (url) {
   return fetch(url).then(res => res.json())
 }
 
 const AxTabs = ({ etre, avoir }) => {
+  const [useEtre, setUseEtre] = useQueryState('ax')
+
   const showEtre = etre
   const showAvoir = !etre || avoir
   return (
-    <Tabs defaultValue={showEtre ? 'etre' : 'avoir'}>
+    <Tabs value={useEtre} onValueChange={setUseEtre}>
       <TabsList>
         {showEtre && <TabsTrigger value='etre'>Être</TabsTrigger>}
         {showAvoir && <TabsTrigger value='avoir'>Avoir</TabsTrigger>}
