@@ -1,8 +1,8 @@
-import { useQueryState } from 'nuqs'
-import { useEffect, useRef } from 'react'
-import useSWR from 'swr'
-import Conjugation from './Conjugation'
 import { EmptySearch } from './Empty'
+import { useEffect, useRef } from 'react'
+import { useQueryState } from 'nuqs'
+import Conjugation from './Conjugation'
+import useSWR from 'swr'
 
 export default function Search () {
   const [search, setSearch] = useQueryState('q')
