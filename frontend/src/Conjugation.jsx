@@ -1,6 +1,8 @@
 import useSWR from 'swr'
 import { Verb, Faces } from './model'
 import { etreVerbs, etreAndAvoirVerbs } from './data'
+import { Button } from '@/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export default function Conjugation ({ verb }) {
   const { data } = useSWR(`/api/t/${verb.template}`, fetcher)
@@ -33,14 +35,9 @@ export default function Conjugation ({ verb }) {
         <div className='px-2'>{renderCell(word.presentParticiple)}</div>
         <div className='px-2'>{word.participle}</div>
       </div>
-      <div>{verb.verb}</div>
-      <div>{verb.template}</div>
-      <div>{word.participle}</div>
-      <div>participe présent: {renderCell(word.presentParticiple)}</div>
-      <div>infinitive: {renderCell(word.infinitive)}</div>
-      <div>max width: {word.maxWidth}</div>
-      <div>is etre: {isEtre ? 'true' : 'false'}</div>
-      <div>is etre and avoir: {isEtreAndAvoir ? 'true' : 'false'}</div>
+      <div>
+        <AxTabs etre={isEtre} avoir={isEtreAndAvoir} />
+      </div>
       <table className='conjugation-table'>
         <thead>
           <th />
@@ -128,4 +125,17 @@ function renderCell (cell) {
 
 function fetcher (url) {
   return fetch(url).then(res => res.json())
+}
+
+const AxTabs = ({ etre, avoir }) => {
+  const showEtre = etre
+  const showAvoir = !etre || avoir
+  return (
+    <Tabs defaultValue={showEtre ? 'etre' : 'avoir'}>
+      <TabsList>
+        {showEtre && <TabsTrigger value='etre'>Être</TabsTrigger>}
+        {showAvoir && <TabsTrigger value='avoir'>Avoir</TabsTrigger>}
+      </TabsList>
+    </Tabs>
+  )
 }
