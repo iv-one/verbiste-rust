@@ -1,14 +1,17 @@
 import './App.css'
 import Search from './Search'
 import { SWRConfig } from 'swr'
+import { NuqsAdapter } from 'nuqs/adapters/react'
 
 function App () {
   return (
-    <SWRConfig value={{ provider: () => new Map() }}>
-      <main className='antialiased p-4'>
-        <Search />
-      </main>
-    </SWRConfig>
+    <NuqsAdapter>
+      <SWRConfig value={{ provider: () => new Map() }}>
+        <main className='antialiased p-4'>
+          <Search />
+        </main>
+      </SWRConfig>
+    </NuqsAdapter>
   )
 }
 

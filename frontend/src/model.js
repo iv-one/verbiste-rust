@@ -129,7 +129,8 @@ export const reorderVerbs = (verbs) => {
 }
 
 export const detectGroup = (verb, suffix, participle) => {
-  if (suffix === 'er' && verb !== 'aller') {
+  // ending in er except aller
+  if (verb !== 'aller' && verb.endsWith('er')) {
     return 1
   }
   if (suffix === 'ir' && participle.includes('ssant')) {
