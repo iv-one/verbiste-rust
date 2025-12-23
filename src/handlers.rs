@@ -36,41 +36,8 @@ pub async fn get_template_handler(
 
 pub async fn search_verbs_handler(
     query: String,
-    verbs: Arc<Vec<verbs::Verb>>,
+    search_index: Arc<verbs::VerbSearchIndex>,
 ) -> Result<warp::reply::Response, Rejection> {
-    let query_lower = query.to_lowercase();
-    let mut results = Vec::new();
-
-    // Use binary search to find insertion point for the query
-    // This gives us a starting point near where matching verbs would be
-    let start_index = match verbs.binary_search_by(|v| v.verb.to_lowercase().cmp(&query_lower)) {
-        Ok(idx) => idx,
-        Err(idx) => idx,
-    };
-
-    // Find the first verb that starts with the query by scanning backwards
-    let mut first_match = start_index;
-    while first_match > 0
-        && verbs[first_match - 1]
-            .verb
-            .to_lowercase()
-            .starts_with(&query_lower)
-    {
-        first_match -= 1;
-    }
-
-    // Collect up to 20 verbs that start with the query (case-insensitive)
-    for verb in verbs.iter().skip(first_match) {
-        if verb.verb.to_lowercase().starts_with(&query_lower) {
-            results.push(verb);
-            if results.len() >= 20 {
-                break;
-            }
-        } else {
-            // Since verbs are sorted, if we find one that doesn't match, we can stop
-            break;
-        }
-    }
-
+    let results = search_index.search(&query);
     Ok(warp::reply::json(&results).into_response())
 }

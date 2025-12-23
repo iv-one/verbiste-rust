@@ -50,6 +50,10 @@ async fn main() {
         }
     };
 
+    // Build search index for fast accent-insensitive search
+    info!("Building search index...");
+    let search_index = Arc::new(verbs::build_search_index((*verbs).clone()));
+
     // Load all templates from embedded data
     info!("Loading templates from embedded data...");
     let templates = match template::load_all_templates(CONJUGATION_XML) {
@@ -71,7 +75,7 @@ async fn main() {
 
     // Clone Arc for use in closures
     let verbs_for_verb_handler = verbs.clone();
-    let verbs_for_search_handler = verbs.clone();
+    let search_index_for_search_handler = search_index.clone();
     let templates_for_template_handler = templates.clone();
 
     // API routes with /api prefix
@@ -98,10 +102,10 @@ async fn main() {
         .and(warp::query::<std::collections::HashMap<String, String>>())
         .and(warp::get())
         .and_then(move |params: std::collections::HashMap<String, String>| {
-            let verbs = verbs_for_search_handler.clone();
+            let search_index = search_index_for_search_handler.clone();
             async move {
                 let query = params.get("q").cloned().unwrap_or_default();
-                handlers::search_verbs_handler(query, verbs).await
+                handlers::search_verbs_handler(query, search_index).await
             }
         });
 
