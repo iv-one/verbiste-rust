@@ -27,15 +27,20 @@ export default function Search () {
         if (prev < data.length - 1) {
           return prev + 1
         }
-        return prev
+        // Wrap around to 0 if at the end
+        return 0
       })
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
       setSelectedIndex(prev => {
+        if (prev === -1) {
+          // Start from the last index if no item is selected
+          return data.length - 1
+        }
         if (prev > 0) {
           return prev - 1
         }
-        return -1
+        return data.length - 1
       })
     } else if (e.key === 'Enter' && selectedIndex >= 0 && selectedIndex < data.length) {
       e.preventDefault()
