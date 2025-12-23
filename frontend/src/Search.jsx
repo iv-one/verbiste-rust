@@ -79,7 +79,7 @@ export default function Search () {
           <ul className='divide-y divide-gray-200'>
             {data.map((item, index) => (
               <li
-                key={item.id}
+                key={item.verb}
                 className={`p-2 flex items-center justify-between cursor-pointer hover:bg-gray-100 ${selectedIndex === index ? 'bg-gray-100' : ''}`}
                 onClick={() => handleItemClick(item)}
               >

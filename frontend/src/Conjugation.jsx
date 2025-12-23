@@ -51,45 +51,53 @@ export default function Conjugation ({ verb }) {
 
       <table className='conjugation-table mt-8'>
         <thead>
-          <th />
-          <th>Passé simple</th>
-          <th>Imparfait</th>
-          <th>Présent</th>
-          <th>Conditionnel</th>
-          <th>Futur</th>
+          <tr>
+            <th />
+            <th>Passé simple</th>
+            <th>Imparfait</th>
+            <th>Présent</th>
+            <th>Conditionnel</th>
+            <th>Futur</th>
+          </tr>
         </thead>
         <tbody>
           {rows.map(n => renderRow(n, word))}
         </tbody>
         <thead className='secondary'>
-          <th />
-          <th />
-          <th>Subjonctif imparfait</th>
-          <th>Subjonctif</th>
-          <th />
-          <th />
+          <tr>
+            <th />
+            <th />
+            <th>Subjonctif imparfait</th>
+            <th>Subjonctif</th>
+            <th />
+            <th />
+          </tr>
         </thead>
         <tbody>
           {rows.map(n => renderRowSub(n, word))}
         </tbody>
         <thead className='secondary'>
-          <th />
-          <th>Passé antérieur</th>
-          <th>Plus-que-parfait</th>
-          <th>Passé composé</th>
-          <th>Conditionnel passé</th>
-          <th>Futur antérieur</th>
+          <tr>
+            <th />
+            <th>Passé antérieur</th>
+            <th>Plus-que-parfait</th>
+            <th>Passé composé</th>
+            <th>Conditionnel passé</th>
+            <th>Futur antérieur</th>
+          </tr>
         </thead>
         <tbody>
           {rows.map(n => renderRowComposite(n, word, ax))}
         </tbody>
         <thead className='secondary'>
-          <th />
-          <th>Participe passé</th>
-          <th>Imperatif présent</th>
-          <th />
-          <th />
-          <th />
+          <tr>
+            <th />
+            <th>Participe passé</th>
+            <th>Imperatif présent</th>
+            <th />
+            <th />
+            <th />
+          </tr>
         </thead>
         <tbody>
           {take(rows, 4).map(n => renderLastRow(n, word))}
