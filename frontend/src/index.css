@@ -13,6 +13,19 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.search-input {
+  /* Remove iOS input styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  box-shadow: none;
+  /* Remove iOS inner shadow */
+  -webkit-box-shadow: none;
+  /* Remove iOS input highlight */
+  -webkit-tap-highlight-color: transparent;
+}
+
 .conjugation-table {
   border-collapse: collapse;
   @apply min-w-xl;

@@ -1,17 +1,33 @@
 import { useQueryState } from 'nuqs'
+import { useEffect, useRef } from 'react'
 import useSWR from 'swr'
 import Conjugation from './Conjugation'
 import { EmptySearch } from './Empty'
 
 export default function Search () {
   const [search, setSearch] = useQueryState('q')
+  const inputRef = useRef(null)
   const { data } = useSWR(`/api/search?q=${search}`, fetcher)
   const hasData = data && search && data.length > 1
   const hasSearchResults = data && search && data.length > 0
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
+
   return (
     <div>
       <h1 className='text-xs border-b border-gray-200 pb-1 w-md px-2 text-gray-500'>Verb</h1>
-      <input type='text' placeholder='Search' className='w-full p-2 border-0 bg-transparent focus:outline-none' value={search} onChange={(e) => setSearch(e.target.value)} />
+      <input
+        ref={inputRef}
+        type='text'
+        placeholder='Search'
+        className='search-input w-full p-2 border-0 bg-transparent focus:outline-none'
+        value={search || ''}
+        onChange={(e) => setSearch(e.target.value)}
+      />
 
       <div className='mt-2 max-w-md'>
         {hasData && (
