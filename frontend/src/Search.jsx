@@ -74,12 +74,14 @@ export default function Search () {
 
   return (
     <div>
-      <h1 className='text-xs border-b border-gray-200 pb-1 w-md px-2 text-gray-500'>Verb</h1>
-      <SearchInput
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        onKeyDown={handleKeyDown}
-      />
+      <div className='w-full md:w-md'>
+        <h1 className='text-xs border-b border-gray-200 pb-1 w-full px-2 text-gray-500'>Verb</h1>
+        <SearchInput
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+      </div>
 
       <div className='mt-2 max-w-md'>
         {hasData && !selectedVerb && (
