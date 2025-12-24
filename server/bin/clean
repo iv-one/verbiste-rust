@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm -rf public
+mkdir public
+echo "It works!" > public/index.html

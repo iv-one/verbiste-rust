@@ -18,9 +18,9 @@ export class Verb {
       const [prefix, suffix] = name.split(':')
 
       this.prefix = prefix
-      this.base = verb.replace(suffix, '')
+      this.base = verb.endsWith(suffix) ? verb.slice(0, -suffix.length) : verb
       this.suffix = suffix
-      this.maxWidth = Math.max(this.infinitive.length, this.future[0].length)
+      this.maxWidth = Math.max(this.infinitive.length, this.future?.[0]?.length ?? 0)
 
       this.group = detectGroup(verb, suffix, this.participle)
     }
@@ -34,8 +34,12 @@ export class Verb {
     const path = field.split('.')
     let value = this.template
     for (const p of path) {
+      if (!value) {
+        return []
+      }
       value = value[p]
     }
+
     const result = deriveVerbs(this.base, value)
     this.cache.set(field, result)
     return result
@@ -57,7 +61,7 @@ export class Verb {
 
   // participe passé main form
   get participle () {
-    return this.pastParticiple[0][0]
+    return this.pastParticiple?.[0]?.[0] ?? ''
   }
 
   get simplePast () {

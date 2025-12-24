@@ -120,3 +120,15 @@ describe('Verb aimer', function () {
     expect(verb.imperativePresent).to.deep.equal([['aime'], ['aimons'], ['aimez']])
   })
 })
+
+describe('Verb edge cases', function () {
+  const verb = new Verb('merder', aimer)
+
+  it('infinitive present', function () {
+    expect(verb.infinitive).to.deep.equal(['merder'])
+  })
+
+  it('present', function () {
+    expect(verb.present).to.deep.equal([['merde'], ['merdes'], ['merde'], ['merdent'], ['merdons'], ['merdez']])
+  })
+})
