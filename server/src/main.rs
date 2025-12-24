@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
 #![deny(warnings)]
 mod handlers;
 mod template;
@@ -11,8 +13,8 @@ use std::sync::Arc;
 use warp::Filter;
 
 // Embed XML data files into the binary at compile time
-const VERBS_XML: &str = include_str!("../data/verbs-fr.xml");
-const CONJUGATION_XML: &str = include_str!("../data/conjugation-fr.xml");
+const VERBS_XML: &str = include_str!("../../data/verbs-fr.xml");
+const CONJUGATION_XML: &str = include_str!("../../data/conjugation-fr.xml");
 
 // Embed public directory into binary at compile time
 #[derive(RustEmbed)]

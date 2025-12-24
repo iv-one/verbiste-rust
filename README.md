@@ -1,5 +1,8 @@
 # verbiste-rust
 
+![Server License](https://img.shields.io/badge/server-GPL%20v2-blue)
+![Frontend License](https://img.shields.io/badge/frontend-MIT-green)
+
 A Rust implementation of French verb conjugation.
 
 The `server/` and `data/` folders are a derivative work of [Verbiste](http://gvlsywt.cluster051.hosting.ovh.net/dev/verbiste.html) by Pierre Sarrazin.

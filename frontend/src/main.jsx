@@ -1,7 +1,4 @@
-/*
- * This frontend is licensed under the MIT License.
- * See frontend/LICENSE for details.
- */
+// SPDX-License-Identifier: MIT
 
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
