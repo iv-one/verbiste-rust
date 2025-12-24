@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { emptyList } from './data'
 import { EmptySearch } from './Empty'
 import { useQueryState } from 'nuqs'
+import { useState, useEffect } from 'react'
 import Conjugation from './Conjugation'
 import SearchInput from './SearchInput'
 import useSWR from 'swr'
@@ -9,13 +10,15 @@ export default function Search () {
   const [search, setSearch] = useQueryState('q')
   const [selectedIndex, setSelectedIndex] = useState(-1)
 
-  const { data } = useSWR(`/api/search?q=${search}`, fetcher,
+  const { data: verbsData } = useSWR(`/api/search?q=${search}`, fetcher,
     {
       keepPreviousData: true
     }
   )
-  const hasData = data && search && data.length > 1
-  const hasSearchResults = data && search && data.length > 0
+
+  const data = search ? verbsData : emptyList
+  const hasData = data && data.length > 1
+  const hasSearchResults = data && data.length > 0
 
   // Reset selected index when search changes
   useEffect(() => {
