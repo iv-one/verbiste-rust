@@ -1,3 +1,0 @@
-#!/bin/bash
-
-scp target/x86_64-unknown-linux-musl/release/verbiste-rust root@fr:verbiste-rust

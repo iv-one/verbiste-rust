@@ -5,6 +5,12 @@
 		},
 		{
 			"path": "frontend"
+		},
+		{
+			"path": "server"
+		},
+		{
+			"path": "data"
 		}
 	],
 	"settings": {}

@@ -1,9 +1,0 @@
-#!/bin/bash
-
-pushd frontend
-pnpm i
-pnpm build
-popd
-
-rm -rf public/
-cp -r frontend/dist/ public/

@@ -1,0 +1,13 @@
+NOTICE
+
+This repository contains multiple components under different licenses.
+
+- server/ is licensed under the GNU General Public License Version 2
+  because it uses GPL-licensed Verbiste data.
+
+- data/ contains Verbiste linguistic data and is licensed under the GPL.
+
+- frontend/ is licensed under the MIT License and is an independent work.
+
+The licenses apply to each component individually and do not extend
+repository-wide.
