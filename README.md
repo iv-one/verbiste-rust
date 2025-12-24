@@ -2,7 +2,7 @@
 
 A Rust implementation of French verb conjugation.
 
-The /server and /data folders are a derivative work of [Verbiste](http://gvlsywt.cluster051.hosting.ovh.net/dev/verbiste.html) by Pierre Sarrazin.
+The `server/` and `data/` folders are a derivative work of [Verbiste](http://gvlsywt.cluster051.hosting.ovh.net/dev/verbiste.html) by Pierre Sarrazin.
 
 This project is vibe coded and is used for personal needs (i.e., learning French). It may not follow all best practices and is primarily intended for personal use.
 
