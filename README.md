@@ -6,6 +6,9 @@ The `server/` and `data/` folders are a derivative work of [Verbiste](http://gvl
 
 This project is vibe coded and is used for personal needs (i.e., learning French). It may not follow all best practices and is primarily intended for personal use.
 
+Note: Earlier versions of this repository used a repository-wide GPL license.
+The current licensing model applies per component as described above.
+
 ## Licensing
 
 This repository contains multiple independent components that are licensed

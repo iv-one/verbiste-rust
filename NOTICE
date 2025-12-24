@@ -1,13 +1,17 @@
 NOTICE
 
-This repository contains multiple components under different licenses.
+This project uses Verbiste linguistic data, which is licensed under
+the GNU General Public License (GPL).
 
-- server/ is licensed under the GNU General Public License Version 2
-  because it uses GPL-licensed Verbiste data.
+As a result:
+- The server component is licensed under Version 2, June 1991
+- The data directory contains GPL-licensed Verbiste data.
 
-- data/ contains Verbiste linguistic data and is licensed under the GPL.
+The frontend component is an independent React application
+licensed under the MIT License and does not derive from or link
+against GPL-licensed code or data.
 
-- frontend/ is licensed under the MIT License and is an independent work.
+When run as a hosted service, the software is not distributed.
+Licensing obligations apply only upon distribution of software artifacts.
 
-The licenses apply to each component individually and do not extend
-repository-wide.
+Licenses apply per component and do not extend repository-wide.
