@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test'
 import { expect } from 'chai'
-import { Verb, getMaxWidth, deriveVerbs } from './model.js'
-import { aimer } from './testdata/index.js'
+import { Verb, getMaxWidth, deriveVerbs, detectGroup } from './model.js'
+import { aimer, finir, etre } from './testdata/index.js'
 
 describe('Verb', function () {
   describe('#constructor', function () {
@@ -130,5 +130,32 @@ describe('Verb edge cases', function () {
 
   it('present', function () {
     expect(verb.present).to.deep.equal([['merde'], ['merdes'], ['merde'], ['merdent'], ['merdons'], ['merdez']])
+  })
+})
+
+describe('detectGroup', function () {
+  it('should detect group 1', function () {
+    expect(detectGroup('aimer', 'er', 'aimant')).to.equal(1)
+  })
+
+  it('should detect group 2', function () {
+    expect(detectGroup('finir', 'ir', 'finissant')).to.equal(2)
+    expect(detectGroup('choisir', 'ir', 'choisissant')).to.equal(2)
+  })
+
+  it('should detect group 3', function () {
+    expect(detectGroup('aller', 'er', 'allant')).to.equal(3)
+    expect(detectGroup('venir', 'enir', 'venant')).to.equal(3)
+    expect(detectGroup('sortir', 'tir', 'sortant')).to.equal(3)
+  })
+
+  it('should detect group in #constructor', function () {
+    const aimerVerb = new Verb('aimer', aimer)
+    const finirVerb = new Verb('finir', finir)
+    const etreVerb = new Verb('être', etre)
+
+    expect(aimerVerb.group).to.equal(1)
+    expect(finirVerb.group).to.equal(2)
+    expect(etreVerb.group).to.equal(3)
   })
 })

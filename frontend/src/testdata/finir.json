@@ -1,0 +1,186 @@
+{
+  "name": "fin:ir",
+  "infinitive": {
+    "infinitive_present": [
+      "ir"
+    ]
+  },
+  "indicative": {
+    "present": [
+      [
+        "is"
+      ],
+      [
+        "is"
+      ],
+      [
+        "it"
+      ],
+      [
+        "issons"
+      ],
+      [
+        "issez"
+      ],
+      [
+        "issent"
+      ]
+    ],
+    "imperfect": [
+      [
+        "issais"
+      ],
+      [
+        "issais"
+      ],
+      [
+        "issait"
+      ],
+      [
+        "issions"
+      ],
+      [
+        "issiez"
+      ],
+      [
+        "issaient"
+      ]
+    ],
+    "future": [
+      [
+        "irai"
+      ],
+      [
+        "iras"
+      ],
+      [
+        "ira"
+      ],
+      [
+        "irons"
+      ],
+      [
+        "irez"
+      ],
+      [
+        "iront"
+      ]
+    ],
+    "simple_past": [
+      [
+        "is"
+      ],
+      [
+        "is"
+      ],
+      [
+        "it"
+      ],
+      [
+        "îmes"
+      ],
+      [
+        "îtes"
+      ],
+      [
+        "irent"
+      ]
+    ]
+  },
+  "conditional": {
+    "present": [
+      [
+        "irais"
+      ],
+      [
+        "irais"
+      ],
+      [
+        "irait"
+      ],
+      [
+        "irions"
+      ],
+      [
+        "iriez"
+      ],
+      [
+        "iraient"
+      ]
+    ]
+  },
+  "subjunctive": {
+    "present": [
+      [
+        "isse"
+      ],
+      [
+        "isses"
+      ],
+      [
+        "isse"
+      ],
+      [
+        "issions"
+      ],
+      [
+        "issiez"
+      ],
+      [
+        "issent"
+      ]
+    ],
+    "imperfect": [
+      [
+        "isse"
+      ],
+      [
+        "isses"
+      ],
+      [
+        "ît"
+      ],
+      [
+        "issions"
+      ],
+      [
+        "issiez"
+      ],
+      [
+        "issent"
+      ]
+    ]
+  },
+  "imperative": {
+    "imperative_present": [
+      [
+        "is"
+      ],
+      [
+        "issons"
+      ],
+      [
+        "issez"
+      ]
+    ]
+  },
+  "participle": {
+    "present_participle": [
+      "issant"
+    ],
+    "past_participle": [
+      [
+        "i"
+      ],
+      [
+        "is"
+      ],
+      [
+        "ie"
+      ],
+      [
+        "ies"
+      ]
+    ]
+  }
+}

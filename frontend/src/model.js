@@ -22,7 +22,7 @@ export class Verb {
       this.suffix = suffix
       this.maxWidth = Math.max(this.infinitive.length, this.future?.[0]?.length ?? 0)
 
-      this.group = detectGroup(verb, suffix, this.participle)
+      this.group = detectGroup(verb, suffix, this.presentParticipleOnly)
     }
   }
 
@@ -52,6 +52,10 @@ export class Verb {
   // participe présent
   get presentParticiple () {
     return this.derive('participle.present_participle')
+  }
+
+  get presentParticipleOnly () {
+    return this.presentParticiple?.[0] ?? ''
   }
 
   // participe passé
@@ -134,12 +138,12 @@ export const reorderVerbs = (verbs) => {
   return verbs
 }
 
-export const detectGroup = (verb, suffix, participle) => {
+export const detectGroup = (verb, suffix, presentParticiple) => {
   // ending in er except aller
   if (verb !== 'aller' && verb.endsWith('er')) {
     return 1
   }
-  if (suffix === 'ir' && participle.includes('ssant')) {
+  if (suffix === 'ir' && presentParticiple.endsWith('ssant')) {
     return 2
   }
   return 3
